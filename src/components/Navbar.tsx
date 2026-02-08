@@ -29,7 +29,12 @@ export default function Navbar() {
               route === link.route ? "text-blue-600" : "hover:text-purple-600"
             }
           >
-            <a href={link.route}>{link.label}</a>
+            <a
+              href={link.route}
+              className={`focus-visible:outline-none ${route !== link.route ? "focus-visible:text-purple-600" : ""}`}
+            >
+              {link.label}
+            </a>
           </li>
         ))}
       </ul>
