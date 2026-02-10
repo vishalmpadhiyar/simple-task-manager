@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Task } from "../lib/types";
-import { getStorageTasks } from "../services/storage";
+import { getStorageTasks, saveStorageTasks } from "../services/storage";
 
 export default function useTask() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -11,15 +11,19 @@ export default function useTask() {
     setTasks(getStorageTasks());
   }, []);
 
+  const toggleIsTrash = () => {
+    setIsTrash((prev) => !prev);
+  };
+
   const updateTaskById = useCallback(
     (id: string, field: keyof Task, value: string | boolean) => {
-      setTasks((prev) =>
-        prev.map((task) =>
-          task.id === id ? { ...task, [field]: value } : task,
-        ),
+      const updatedTasks = tasks.map((task) =>
+        task.id === id ? { ...task, [field]: value } : task,
       );
+      setTasks(updatedTasks);
+      saveStorageTasks(updatedTasks);
     },
-    [setTasks],
+    [tasks],
   );
 
   const getItemById = useCallback(
@@ -29,7 +33,7 @@ export default function useTask() {
     [tasks],
   );
 
-  const getSubItemsById = useCallback(
+  const getSubTasksById = useCallback(
     (parentId: string): Task[] => {
       return tasks.filter((task) => task.parentId === parentId);
     },
@@ -38,20 +42,20 @@ export default function useTask() {
 
   const isCompletedTask = useCallback(
     (task: Task): boolean => {
-      const subItems = getSubItemsById(task.id);
+      const subItems = getSubTasksById(task.id);
       if (!subItems.length) return task.completed === true;
       return subItems.every((sub) => sub.completed === true);
     },
-    [getSubItemsById],
+    [getSubTasksById],
   );
 
   const isInProgressTask = useCallback(
     (task: Task): boolean => {
-      const subItems = getSubItemsById(task.id);
+      const subItems = getSubTasksById(task.id);
       if (subItems.length === 0) return task.completed === false;
       return !subItems.every((sub) => sub.completed === true);
     },
-    [getSubItemsById],
+    [getSubTasksById],
   );
 
   const totalTasks = useMemo(() => tasks.length, [tasks]);
@@ -71,33 +75,50 @@ export default function useTask() {
   }, [tasks]);
 
   const filteredTasks = useMemo(() => {
-    return isTrash
-      ? tasks.filter(
-          (task) =>
-            task.inTrash &&
-            (task.title.includes(searchText) ||
-              task.description.includes(searchText)),
-        )
-      : tasks.filter(
-          (task) =>
-            !task.inTrash &&
-            (task.title.includes(searchText) ||
-              task.description.includes(searchText)),
-        );
+    const query = searchText.toLowerCase();
+
+    return tasks.filter((task) => {
+      const matchesTrash = isTrash ? task.inTrash : !task.inTrash;
+      const matchesSearch =
+        !searchText ||
+        task.title.toLowerCase().includes(query) ||
+        task.description.toLowerCase().includes(query);
+
+      return matchesTrash && matchesSearch;
+    });
   }, [tasks, searchText, isTrash]);
 
+  const createTask = useCallback(
+    (title: string, description: string): void => {
+      const newTask = {
+        id: crypto.randomUUID() as string,
+        title,
+        description,
+        completed: false,
+        inTrash: false,
+        parentId: null,
+        children: [],
+      };
+      const updatedTasks = [newTask, ...tasks];
+      setTasks(updatedTasks);
+      saveStorageTasks(updatedTasks);
+    },
+    [tasks],
+  );
+
   return {
+    isTrash,
     searchText,
     totalTasks,
+    trashedTasks,
     filteredTasks,
     completedTasks,
     inProgressTasks,
-    trashedTasks,
-    isCompletedTask,
-    isInProgressTask,
     setIsTrash,
-    setSearchText,
     getItemById,
+    toggleIsTrash,
+    setSearchText,
     updateTaskById,
+    createTask,
   };
 }

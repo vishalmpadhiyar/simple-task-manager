@@ -23,13 +23,16 @@ export default function TaskComponent({ task }: TaskComponentProps) {
   }, [getItemById, updateTaskById]);
 
   return (
-    <div className="p-4 max-w-md bg-white border border-gray-200 rounded-md shadow-md">
+    <div className="p-4 max-w-md bg-white dark:bg-slate-800 text-black dark:text-white border border-gray-200 rounded-md shadow-md">
       <div className="flex gap-2 justify-end">
-        <Button className="rounded-full!" onClick={toggleEdit}>
+        <Button
+          className="rounded-full! dark:border-none dark:hover:bg-linear-to-r from-purple-600 to-blue-600"
+          onClick={toggleEdit}
+        >
           {isEdit ? (
-            <X className="size-4 text-gray-700" />
+            <X className="size-4 text-gray-700 dark:text-white" />
           ) : (
-            <Pencil className="size-4 text-gray-700" />
+            <Pencil className="size-4 text-gray-700 dark:text-white" />
           )}
         </Button>
         <Button className="rounded-full!" onClick={toggleTrash}>

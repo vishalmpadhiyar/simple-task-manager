@@ -1,19 +1,26 @@
-import { Search, Filter, Trash2, ListFilter } from "lucide-react";
+import { Search, Filter, Trash2, ListFilter, Plus, List } from "lucide-react";
 import Chip from "../components/Chip";
 import Layout from "../components/layouts/Layout";
 import Section from "../components/layouts/Section";
 import useTask from "../hooks/useTask";
 import TaskRoot from "../components/tasks/TaskRoot";
 import Button from "../components/Button";
+import { useState } from "react";
+import TaskForm from "../components/tasks/TaskForm";
 
 export default function HomePage() {
+  const [isForm, setIsForm] = useState(false);
+
   const {
+    isTrash,
     totalTasks,
+    searchText,
+    trashedTasks,
     completedTasks,
     inProgressTasks,
-    trashedTasks,
-    searchText,
     setSearchText,
+    toggleIsTrash,
+    createTask,
   } = useTask();
 
   return (
@@ -57,16 +64,32 @@ export default function HomePage() {
 
             <div className="flex justify-end gap-3">
               <Button className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10">
-                <Filter className="w-4 h-4" />
+                <Filter className="size-5" />
                 <span className="hidden sm:inline">Filters</span>
               </Button>
               <Button className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10">
-                <ListFilter className="w-4 h-4" />
+                <ListFilter className="size-5" />
                 <span className="hidden sm:inline">Sort</span>
               </Button>
-              <Button className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10">
-                <Trash2 className="w-4 h-4" />
-                <span className="hidden sm:inline">Trash</span>
+              <Button
+                onClick={toggleIsTrash}
+                className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10"
+              >
+                {isTrash ? (
+                  <List className="size-5" />
+                ) : (
+                  <Trash2 className="size-5" />
+                )}
+                <span className="hidden sm:inline min-w-10">
+                  {isTrash ? "Active" : "Trash"}
+                </span>
+              </Button>
+              <Button
+                onClick={() => setIsForm(true)}
+                className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10"
+              >
+                <Plus className="size-5" />
+                <span className="hidden sm:inline">Add Task</span>
               </Button>
             </div>
           </div>
@@ -76,6 +99,11 @@ export default function HomePage() {
       <Section>
         <TaskRoot />
       </Section>
+      <TaskForm
+        isOpen={isForm}
+        onClose={() => setIsForm(false)}
+        onSubmit={createTask}
+      />
     </Layout>
   );
 }

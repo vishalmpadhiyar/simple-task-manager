@@ -7,7 +7,7 @@ export interface Task {
   id: string;
   title: string;
   description: string;
-  parentId: string;
+  parentId: string | null;
   completed: boolean;
   inTrash: boolean;
   children: Task[];

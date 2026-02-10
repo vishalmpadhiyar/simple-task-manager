@@ -1,11 +1,11 @@
 import { Moon, Sun } from "lucide-react";
-import useTheme from "../../hooks/useTheme";
 import Navbar from "../Navbar";
 import { ROUTE, THEME } from "../../lib/const";
 import Button from "../Button";
+import { useThemeContext } from "../../context/ThemeProvider";
 
 export default function Header() {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useThemeContext();
 
   return (
     <header className="sticky top-0 z-50">
