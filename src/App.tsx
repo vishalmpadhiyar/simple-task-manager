@@ -6,6 +6,7 @@ import AboutPage from "./pages/AboutPage";
 import GuidePage from "./pages/GuidePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import LoadingPage from "./pages/LoadingPage";
+import { TaskProvider } from "./context/TaskProvider";
 
 export default function App() {
   const { route } = useRoute();
@@ -19,7 +20,11 @@ export default function App() {
   return (
     <>
       {!route && <LoadingPage />}
-      {route === ROUTE.HOME && <HomePage />}
+      {route === ROUTE.HOME && (
+        <TaskProvider>
+          <HomePage />
+        </TaskProvider>
+      )}
       {route === ROUTE.ABOUT && <AboutPage />}
       {route === ROUTE.GUIDE && <GuidePage />}
       {route && !pageFound && <NotFoundPage />}

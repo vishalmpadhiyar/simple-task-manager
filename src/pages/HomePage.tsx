@@ -2,11 +2,11 @@ import { Search, Filter, Trash2, ListFilter, Plus, List } from "lucide-react";
 import Chip from "../components/Chip";
 import Layout from "../components/layouts/Layout";
 import Section from "../components/layouts/Section";
-import useTask from "../hooks/useTask";
 import TaskRoot from "../components/tasks/TaskRoot";
 import Button from "../components/Button";
 import { useState } from "react";
 import TaskForm from "../components/tasks/TaskForm";
+import { useTaskContext } from "../context/TaskProvider";
 
 export default function HomePage() {
   const [isForm, setIsForm] = useState(false);
@@ -21,7 +21,7 @@ export default function HomePage() {
     setSearchText,
     toggleIsTrash,
     createTask,
-  } = useTask();
+  } = useTaskContext();
 
   return (
     <Layout>

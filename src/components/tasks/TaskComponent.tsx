@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 import type { Task } from "../../lib/types";
 import { History, Pencil, Trash2, X } from "lucide-react";
-import useTask from "../../hooks/useTask";
 import Button from "../Button";
+import { useTaskContext } from "../../context/TaskProvider";
 
 interface TaskComponentProps {
   task: Task;
@@ -11,7 +11,7 @@ interface TaskComponentProps {
 export default function TaskComponent({ task }: TaskComponentProps) {
   const [isEdit, setIsEdit] = useState(false);
   const [selectedTask, setSelectedTask] = useState(task);
-  const { updateTaskById, getItemById } = useTask();
+  const { updateTaskById, getItemById } = useTaskContext();
 
   const toggleEdit = useCallback(() => {
     setIsEdit((prev) => !prev);

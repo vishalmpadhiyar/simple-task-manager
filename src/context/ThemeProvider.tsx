@@ -3,12 +3,12 @@ import { THEME } from "../lib/const";
 import type { Theme } from "../lib/types";
 import useTheme from "../hooks/useTheme";
 
-export interface ThemeContextValue {
+interface ThemeContextValue {
   theme: Theme;
   toggleTheme: () => void;
 }
 
-export const ThemeContext = createContext<ThemeContextValue>({
+const ThemeContext = createContext<ThemeContextValue>({
   theme: THEME.LIGHT,
   toggleTheme: () => {},
 });
