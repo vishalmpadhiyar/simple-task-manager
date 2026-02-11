@@ -6,7 +6,8 @@ import AboutPage from "./pages/AboutPage";
 import GuidePage from "./pages/GuidePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import LoadingPage from "./pages/LoadingPage";
-import { TaskProvider } from "./context/TaskProvider";
+import { TaskProvider } from "./provider/TaskProvider";
+import { ThemeProvider } from "./provider/ThemeProvider";
 
 export default function App() {
   const { route } = useRoute();
@@ -18,7 +19,7 @@ export default function App() {
   );
 
   return (
-    <>
+    <ThemeProvider>
       {!route && <LoadingPage />}
       {route === ROUTE.HOME && (
         <TaskProvider>
@@ -28,6 +29,6 @@ export default function App() {
       {route === ROUTE.ABOUT && <AboutPage />}
       {route === ROUTE.GUIDE && <GuidePage />}
       {route && !pageFound && <NotFoundPage />}
-    </>
+    </ThemeProvider>
   );
 }

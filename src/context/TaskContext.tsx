@@ -1,5 +1,4 @@
-import { createContext, useContext, type ReactNode } from "react";
-import useTask from "../hooks/useTask";
+import { createContext } from "react";
 import type { Task } from "../lib/types";
 
 interface TaskContextValue {
@@ -14,7 +13,8 @@ interface TaskContextValue {
   getItemById: (id: string) => Task | undefined;
   toggleIsTrash: () => void;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
-  updateTaskById: (
+  updateTask: (task: Task) => void;
+  updateTaskFieldById: (
     id: string,
     field: keyof Task,
     value: string | boolean,
@@ -22,7 +22,7 @@ interface TaskContextValue {
   createTask: (title: string, description: string) => void;
 }
 
-const TaskContext = createContext<TaskContextValue>({
+export const TaskContext = createContext<TaskContextValue>({
   isTrash: false,
   searchText: "",
   totalTasks: 0,
@@ -34,18 +34,7 @@ const TaskContext = createContext<TaskContextValue>({
   getItemById: () => undefined,
   toggleIsTrash: () => {},
   setSearchText: () => {},
-  updateTaskById: () => {},
+  updateTask: () => {},
+  updateTaskFieldById: () => {},
   createTask: () => {},
 });
-
-export function TaskProvider({ children }: { children: ReactNode }) {
-  const taskState = useTask();
-
-  return (
-    <TaskContext.Provider value={taskState}>{children}</TaskContext.Provider>
-  );
-}
-
-export function useTaskContext() {
-  return useContext(TaskContext);
-}

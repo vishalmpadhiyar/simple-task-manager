@@ -4,9 +4,9 @@ import Layout from "../components/layouts/Layout";
 import Section from "../components/layouts/Section";
 import TaskRoot from "../components/tasks/TaskRoot";
 import Button from "../components/Button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import TaskForm from "../components/tasks/TaskForm";
-import { useTaskContext } from "../context/TaskProvider";
+import { TaskContext } from "../context/TaskContext";
 
 export default function HomePage() {
   const [isForm, setIsForm] = useState(false);
@@ -21,7 +21,7 @@ export default function HomePage() {
     setSearchText,
     toggleIsTrash,
     createTask,
-  } = useTaskContext();
+  } = useContext(TaskContext);
 
   return (
     <Layout>

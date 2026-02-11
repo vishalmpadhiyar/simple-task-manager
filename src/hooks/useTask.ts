@@ -15,7 +15,18 @@ export default function useTask() {
     setIsTrash((prev) => !prev);
   };
 
-  const updateTaskById = useCallback(
+  const updateTask = useCallback(
+    (newTask: Task) => {
+      const updatedTasks = tasks.map((task) =>
+        task.id === newTask.id ? newTask : task,
+      );
+      setTasks(updatedTasks);
+      saveStorageTasks(updatedTasks);
+    },
+    [tasks],
+  );
+
+  const updateTaskFieldById = useCallback(
     (id: string, field: keyof Task, value: string | boolean) => {
       const updatedTasks = tasks.map((task) =>
         task.id === id ? { ...task, [field]: value } : task,
@@ -118,7 +129,8 @@ export default function useTask() {
     getItemById,
     toggleIsTrash,
     setSearchText,
-    updateTaskById,
+    updateTask,
+    updateTaskFieldById,
     createTask,
   };
 }
