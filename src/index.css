@@ -1,2 +1,16 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+.scrollable {
+  overflow: auto; /* or overflow-y: scroll; */
+
+  /* For Firefox */
+  scrollbar-width: thin;
+
+  /* For Internet Explorer and Edge (Legacy) */
+  -ms-overflow-style: none;
+}
+
+.scrollable::-webkit-scrollbar {
+  display: none;
+}

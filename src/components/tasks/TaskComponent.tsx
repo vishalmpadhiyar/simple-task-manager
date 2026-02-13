@@ -11,7 +11,7 @@ interface TaskComponentProps {
 export default function TaskComponent({ task }: TaskComponentProps) {
   const [isEdit, setIsEdit] = useState(false);
   const [selectedTask, setSelectedTask] = useState(task);
-  const { updateTask, updateTaskFieldById, getItemById } =
+  const { updateTask, updateTaskFieldById, getItemById, deleteTask } =
     useContext(TaskContext);
 
   const toggleEdit = useCallback(() => {
@@ -27,6 +27,10 @@ export default function TaskComponent({ task }: TaskComponentProps) {
     updateTask(selectedTask);
     setIsEdit((prev) => !prev);
   }, [selectedTask, updateTask]);
+
+  const onDeleteTask = useCallback(() => {
+    deleteTask(task.id);
+  }, [deleteTask]);
 
   const onChangeValue = useCallback(
     (field: keyof Task, value: string) => {
@@ -63,19 +67,32 @@ export default function TaskComponent({ task }: TaskComponentProps) {
             </Button>
           </>
         ) : (
-          <Button
-            className="rounded-full! dark:border-none dark:hover:bg-white focus-visible:outline-none"
-            onClick={toggleTrash}
-          >
-            {selectedTask.inTrash ? (
-              <History className="size-4 text-red-500" />
-            ) : (
-              <Trash2 className="size-4 text-red-500" />
+          <>
+            {selectedTask.inTrash && (
+              <>
+                <Button
+                  className="rounded-full! dark:border-none dark:hover:bg-white focus-visible:outline-none"
+                  onClick={onDeleteTask}
+                >
+                  <Trash2 className="size-4 text-red-500" />
+                </Button>
+              </>
             )}
-          </Button>
+            <Button
+              className="rounded-full! dark:border-none dark:hover:bg-white focus-visible:outline-none"
+              onClick={toggleTrash}
+            >
+              {selectedTask.inTrash ? (
+                <History className="size-4 text-red-500" />
+              ) : (
+                <Trash2 className="size-4 text-red-500" />
+              )}
+            </Button>
+          </>
         )}
       </div>
-      <div className="space-y-2">
+      <div className="space-y-2 max-h-49">
+        <p className="text-sm font-medium">Title</p>
         {isEdit ? (
           <input
             id="title"
@@ -86,13 +103,16 @@ export default function TaskComponent({ task }: TaskComponentProps) {
             onChange={(event) => onChangeValue("title", event.target.value)}
           />
         ) : (
-          <p className="h-8">{task.title}</p>
+          <p className="h-8 px-2 py-1 border border-transparent">
+            {task.title}
+          </p>
         )}
+        <p className="text-sm font-medium">Description</p>
         {isEdit ? (
           <textarea
             id="description"
             name="description"
-            className="w-full max-h-25 border border-gray-200 focus-visible:outline-none px-2 py-1 rounded-md"
+            className="w-full max-h-25 border border-gray-200 focus-visible:outline-none px-2 py-1 rounded-md scrollable"
             rows={4}
             value={selectedTask.description}
             onChange={(event) =>
@@ -100,7 +120,9 @@ export default function TaskComponent({ task }: TaskComponentProps) {
             }
           />
         ) : (
-          <p className="h-25">{task.description}</p>
+          <p className="h-25 px-2 py-1 border border-transparent whitespace-pre-line overflow-y-auto scrollable">
+            {task.description}
+          </p>
         )}
       </div>
     </div>

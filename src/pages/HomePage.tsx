@@ -55,7 +55,7 @@ export default function HomePage() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
               <input
                 type="text"
-                className="w-full pl-12 pr-2 py-2 border-2 border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 rounded-lg focus:outline-none focus:border-purple-500 hover:border-slate-300 dark:hover:border-slate-500 max-h-10"
+                className="w-full pl-12 pr-2 py-2 border-2 border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 rounded-lg focus:outline-none hover:border-slate-300 dark:hover:border-slate-500 max-h-10"
                 placeholder="Search by title or description..."
                 value={searchText}
                 onChange={(event) => setSearchText(event.target.value)}
@@ -63,17 +63,17 @@ export default function HomePage() {
             </div>
 
             <div className="flex justify-end gap-3">
-              <Button className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10">
+              <Button className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10 focus-visible:outline-none">
                 <Filter className="size-5" />
                 <span className="hidden sm:inline">Filters</span>
               </Button>
-              <Button className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10">
+              <Button className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10 focus-visible:outline-none">
                 <ListFilter className="size-5" />
                 <span className="hidden sm:inline">Sort</span>
               </Button>
               <Button
                 onClick={toggleIsTrash}
-                className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10"
+                className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10 focus-visible:outline-none"
               >
                 {isTrash ? (
                   <List className="size-5" />
@@ -86,7 +86,7 @@ export default function HomePage() {
               </Button>
               <Button
                 onClick={() => setIsForm(true)}
-                className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10"
+                className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10 focus-visible:outline-none"
               >
                 <Plus className="size-5" />
                 <span className="hidden sm:inline">Add Task</span>

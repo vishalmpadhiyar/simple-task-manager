@@ -26,6 +26,15 @@ export default function useTask() {
     [tasks],
   );
 
+  const deleteTask = useCallback(
+    (id: string) => {
+      const updatedTasks = tasks.filter((task) => task.id !== id);
+      setTasks(updatedTasks);
+      saveStorageTasks(updatedTasks);
+    },
+    [tasks],
+  );
+
   const updateTaskFieldById = useCallback(
     (id: string, field: keyof Task, value: string | boolean) => {
       const updatedTasks = tasks.map((task) =>
@@ -132,5 +141,6 @@ export default function useTask() {
     updateTask,
     updateTaskFieldById,
     createTask,
+    deleteTask,
   };
 }

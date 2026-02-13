@@ -20,6 +20,7 @@ interface TaskContextValue {
     value: string | boolean,
   ) => void;
   createTask: (title: string, description: string) => void;
+  deleteTask: (id: string) => void;
 }
 
 export const TaskContext = createContext<TaskContextValue>({
@@ -37,4 +38,5 @@ export const TaskContext = createContext<TaskContextValue>({
   updateTask: () => {},
   updateTaskFieldById: () => {},
   createTask: () => {},
+  deleteTask: () => {},
 });
