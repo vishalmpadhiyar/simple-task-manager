@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Task } from "../lib/types";
 import { getStorageTasks, saveStorageTasks } from "../services/storage";
+import { convertIntoTree } from "../lib/common";
 
 export default function useTask() {
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -78,26 +79,31 @@ export default function useTask() {
     [getSubTasksById],
   );
 
-  const totalTasks = useMemo(() => tasks.length, [tasks]);
+  const rootTasks = useMemo(
+    () => tasks.filter((task) => !task.parentId),
+    [tasks],
+  );
+
+  const totalTasks = useMemo(() => rootTasks.length, [rootTasks]);
 
   const inProgressTasks = useMemo(
-    () => tasks.filter(isInProgressTask).length,
-    [tasks, isInProgressTask],
+    () => rootTasks.filter(isInProgressTask).length,
+    [rootTasks, isInProgressTask],
   );
 
   const completedTasks = useMemo(
-    () => tasks.filter(isCompletedTask).length,
-    [tasks, isCompletedTask],
+    () => rootTasks.filter(isCompletedTask).length,
+    [rootTasks, isCompletedTask],
   );
 
   const trashedTasks = useMemo(() => {
-    return tasks.filter((task) => task.inTrash).length;
-  }, [tasks]);
+    return rootTasks.filter((task) => task.inTrash).length;
+  }, [rootTasks]);
 
   const filteredTasks = useMemo(() => {
     const query = searchText.toLowerCase();
 
-    return tasks.filter((task) => {
+    const activeTasks = tasks.filter((task) => {
       const matchesTrash = isTrash ? task.inTrash : !task.inTrash;
       const matchesSearch =
         !searchText ||
@@ -106,22 +112,32 @@ export default function useTask() {
 
       return matchesTrash && matchesSearch;
     });
+
+    return convertIntoTree(activeTasks);
   }, [tasks, searchText, isTrash]);
 
   const createTask = useCallback(
-    (title: string, description: string): void => {
+    (
+      title: string,
+      description: string,
+      parentId: string | null = null,
+    ): Task => {
+      const now = new Date().toISOString();
       const newTask = {
         id: crypto.randomUUID() as string,
         title,
         description,
+        parentId,
         completed: false,
         inTrash: false,
-        parentId: null,
         children: [],
+        createdAt: now,
+        updatedAt: now,
       };
       const updatedTasks = [newTask, ...tasks];
       setTasks(updatedTasks);
       saveStorageTasks(updatedTasks);
+      return newTask;
     },
     [tasks],
   );

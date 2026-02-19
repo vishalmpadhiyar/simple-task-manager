@@ -11,4 +11,6 @@ export interface Task {
   completed: boolean;
   inTrash: boolean;
   children: Task[];
+  createdAt: string;
+  updatedAt: string;
 }

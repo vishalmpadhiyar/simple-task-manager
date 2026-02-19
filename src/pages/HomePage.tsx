@@ -96,7 +96,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section>
+      <Section className="pt-6 pb-36 overflow-y-auto">
         <TaskRoot />
       </Section>
       <TaskForm

@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import type { Task } from "../lib/types";
+import { defaultTask } from "../lib/common";
 
 interface TaskContextValue {
   isTrash: boolean;
@@ -19,7 +20,11 @@ interface TaskContextValue {
     field: keyof Task,
     value: string | boolean,
   ) => void;
-  createTask: (title: string, description: string) => void;
+  createTask: (
+    title: string,
+    description: string,
+    parent_id?: string | null,
+  ) => Task;
   deleteTask: (id: string) => void;
 }
 
@@ -37,6 +42,6 @@ export const TaskContext = createContext<TaskContextValue>({
   setSearchText: () => {},
   updateTask: () => {},
   updateTaskFieldById: () => {},
-  createTask: () => {},
+  createTask: () => defaultTask,
   deleteTask: () => {},
 });
