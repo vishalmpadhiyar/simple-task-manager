@@ -6,7 +6,7 @@ import Button from "../Button";
 
 interface SubTaskProps {
   subtask: Task;
-  onDeleteSubTask: (id: string) => void;
+  onDeleteSubTask: (id?: string) => void;
 }
 
 export default function SubTask({ subtask, onDeleteSubTask }: SubTaskProps) {
@@ -49,7 +49,7 @@ export default function SubTask({ subtask, onDeleteSubTask }: SubTaskProps) {
         name="title"
         type="text"
         value={selectedTask.title}
-        className="flex-1 w-full h-8 border border-gray-200 focus-visible:outline-none px-2 py-1 rounded-md"
+        className="flex-1 w-full h-8 border border-gray-200 focus-visible:outline-none px-2 py-1 rounded-lg"
         onChange={(event) => onChangeValue("title", event.target.value)}
         onBlur={onSaveTask}
       />

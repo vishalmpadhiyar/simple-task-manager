@@ -2,7 +2,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 .scrollable {
-  overflow: auto; /* or overflow-y: scroll; */
+  overflow: auto;
 
   /* For Firefox */
   scrollbar-width: thin;
@@ -13,4 +13,14 @@
 
 .scrollable::-webkit-scrollbar {
   display: none;
+}
+
+.hide-scrollable {
+  overflow: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollable::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
 }

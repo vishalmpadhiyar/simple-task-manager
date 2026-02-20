@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import { useState } from "react";
+import Button from "../Button";
 
 interface TaskFormProps {
   isOpen: boolean;
@@ -48,12 +49,12 @@ export default function TaskForm({ isOpen, onClose, onSubmit }: TaskFormProps) {
             <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">
               Create New Task
             </h2>
-            <button
+            <Button
               onClick={handleClose}
-              className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400"
+              className="dark:border-none dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 focus-visible:outline-none"
             >
               <X className="w-5 h-5" />
-            </button>
+            </Button>
           </div>
 
           <form onSubmit={handleSubmit} className="p-6 space-y-4">
@@ -72,14 +73,7 @@ export default function TaskForm({ isOpen, onClose, onSubmit }: TaskFormProps) {
                 placeholder="Enter task title..."
                 required
                 autoFocus
-                className="w-full px-4 py-3
-                         border-2 border-slate-200 dark:border-slate-600
-                         bg-white dark:bg-slate-700
-                         text-slate-900 dark:text-slate-100
-                         placeholder:text-slate-400
-                         rounded-lg
-                         focus:outline-none focus:border-purple-500
-                         hover:border-slate-300"
+                className="w-full px-4 py-3 border-2 border-gray-200 hover:border-slate-300 focus-visible:outline-none rounded-lg dark:bg-slate-700 dark:text-slate-100 dark:border-slate-600 dark:hover:border-slate-500"
               />
             </div>
 
@@ -96,41 +90,25 @@ export default function TaskForm({ isOpen, onClose, onSubmit }: TaskFormProps) {
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Enter task description..."
                 rows={4}
-                className="w-full px-4 py-3
-                         border-2 border-slate-200 dark:border-slate-600
-                         bg-white dark:bg-slate-700
-                         text-slate-900 dark:text-slate-100
-                         placeholder:text-slate-400
-                         rounded-lg
-                         resize-none
-                         focus:outline-none focus:border-purple-500
-                         hover:border-slate-300"
+                className="scrollable w-full px-4 py-3 border-2 border-gray-200 hover:border-slate-300 focus-visible:outline-none rounded-lg dark:bg-slate-700 dark:text-slate-100 dark:border-slate-600 dark:hover:border-slate-500 resize-none"
               />
             </div>
 
-            <div className="flex gap-3 pt-4">
-              <button
+            <div className="flex gap-3">
+              <Button
                 type="button"
                 onClick={handleClose}
-                className="flex-1 px-6 py-3
-                         bg-slate-100 dark:bg-slate-700
-                         text-slate-700 dark:text-slate-300
-                         font-medium rounded-lg
-                         hover:bg-slate-200 dark:hover:bg-slate-600"
+                className="flex-1 font-medium rounded-lg hover:bg-slate-200 dark:border-none dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-white focus-visible:outline-none"
               >
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
                 type="submit"
                 disabled={!title.trim()}
-                className="flex-1 px-6 py-3
-                         bg-linear-to-r from-purple-600 to-blue-600
-                         text-white font-medium rounded-lg
-                         hover:from-purple-700 hover:to-blue-700
-                         disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 font-medium rounded-lg bg-linear-to-r from-purple-600 to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed hover:from-purple-700 hover:to-blue-700 text-white dark:border-none focus-visible:outline-none"
               >
-                create
-              </button>
+                Create
+              </Button>
             </div>
           </form>
         </div>

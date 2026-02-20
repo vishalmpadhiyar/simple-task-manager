@@ -91,31 +91,22 @@ export default function TaskComponent({ task }: TaskComponentProps) {
   }, [selectedTask, updateTask]);
 
   const onAddSubTask = useCallback(() => {
-    const newTask = createTask("", "", task.id);
-    setSelectedTask((prev) => ({
-      ...prev,
-      children: [...prev.children, newTask],
-    }));
+    createTask("", "", task.id);
   }, [createTask, task.id]);
 
-  const onDeleteSubTask = useCallback((id: string) => {
-    setSelectedTask((prev) => ({
-      ...prev,
-      children: prev.children.filter((task) => task.id !== id),
-    }));
-    deleteTask(id);
-  }, []);
-
-  const onDeleteTask = useCallback(() => {
-    deleteTask(task.id);
-  }, [deleteTask]);
+  const onDeleteTask = useCallback(
+    (id?: string) => {
+      deleteTask(id ? id : task.id);
+    },
+    [deleteTask],
+  );
 
   const onChangeValue = useCallback((field: keyof Task, value: string) => {
     setSelectedTask((prev) => ({ ...prev, [field]: value }));
   }, []);
 
   return (
-    <div className="p-4 max-h-96 overflow-y-auto max-w-md bg-white dark:bg-slate-800 text-black dark:text-white border border-gray-200 rounded-md shadow-md">
+    <div className="hide-scrollable p-4 min-h-100 max-h-100 overflow-y-auto max-w-md bg-white dark:bg-slate-800 text-black dark:text-white border border-gray-200 rounded-lg shadow-md">
       {/* action buttons - edit, trash, restore, save, delete */}
       <TaskActions
         isEdit={isEdit}
@@ -135,7 +126,7 @@ export default function TaskComponent({ task }: TaskComponentProps) {
               name="title"
               type="text"
               value={selectedTask.title}
-              className="w-full h-8 border border-gray-200 focus-visible:outline-none px-2 py-1 rounded-md"
+              className="w-full h-8 border border-gray-200 focus-visible:outline-none px-2 py-1 rounded-lg"
               onChange={(event) => onChangeValue("title", event.target.value)}
             />
           ) : (
@@ -152,7 +143,7 @@ export default function TaskComponent({ task }: TaskComponentProps) {
             <textarea
               id="description"
               name="description"
-              className="w-full max-h-25 border border-gray-200 focus-visible:outline-none px-2 py-1 rounded-md scrollable"
+              className="w-full max-h-25 border border-gray-200 focus-visible:outline-none px-2 py-1 rounded-lg scrollable"
               rows={5}
               value={selectedTask.description}
               onChange={(event) =>
@@ -213,28 +204,35 @@ export default function TaskComponent({ task }: TaskComponentProps) {
         </div>
 
         {/* SubTasks Actions */}
-        <div className="flex items-center justify-between">
-          <p className="text-sm font-medium">Subtasks</p>
-          <div className="flex items-center gap-2 text-xs">
-            {!!selectedTask.children.length && (
+        <div>
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-medium">
+              Subtasks ({selectedTask.children.length})
+            </p>
+            <div className="flex items-center gap-2 text-xs">
+              {!!selectedTask.children.length && (
+                <Button
+                  onClick={toggleExpand}
+                  className="rounded-full! p-1! focus-visible:outline-none dark:border-none dark:hover:bg-slate-600"
+                >
+                  {isExpand ? (
+                    <ListCollapse className="w-4 h-4" />
+                  ) : (
+                    <ListChevronsDownUp className="w-4 h-4" />
+                  )}
+                </Button>
+              )}
               <Button
-                onClick={toggleExpand}
+                onClick={onAddSubTask}
                 className="rounded-full! p-1! focus-visible:outline-none dark:border-none dark:hover:bg-slate-600"
               >
-                {isExpand ? (
-                  <ListCollapse className="w-4 h-4" />
-                ) : (
-                  <ListChevronsDownUp className="w-4 h-4" />
-                )}
+                <Plus className="w-4 h-4" />
               </Button>
-            )}
-            <Button
-              onClick={onAddSubTask}
-              className="rounded-full! p-1! focus-visible:outline-none dark:border-none dark:hover:bg-slate-600"
-            >
-              <Plus className="w-4 h-4" />
-            </Button>
+            </div>
           </div>
+          {!selectedTask.children.length && (
+            <p className="text-xs">There are no subtasks to show.</p>
+          )}
         </div>
 
         {/* SubTasks */}
@@ -243,7 +241,7 @@ export default function TaskComponent({ task }: TaskComponentProps) {
             <SubTask
               key={task.id}
               subtask={task}
-              onDeleteSubTask={onDeleteSubTask}
+              onDeleteSubTask={onDeleteTask}
             />
           ))}
       </div>
