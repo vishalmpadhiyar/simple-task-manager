@@ -13,3 +13,16 @@ export const ROUTE = {
   ABOUT: "/about",
   GUIDE: "/guide",
 } as const;
+
+export const FILTERS = {
+  ALL: "all",
+  PENDING: "pending",
+  IN_PROGRESS: "in_progress",
+  COMPLETED: "completed",
+} as const;
+
+export const SORTING = {
+  NEWEST: "newest",
+  OLDEST: "oldest",
+  LAST_UPDATED: "last_updated",
+} as const;

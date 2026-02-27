@@ -5,11 +5,15 @@ import Section from "../components/layouts/Section";
 import TaskRoot from "../components/tasks/TaskRoot";
 import Button from "../components/Button";
 import { useContext, useState } from "react";
-import TaskForm from "../components/tasks/TaskForm";
 import { TaskContext } from "../context/TaskContext";
+import FilterDialog from "../components/dialogs/FilterDialog";
+import TaskDialog from "../components/dialogs/TaskDialog";
+import SortDialog from "../components/dialogs/SortDialog";
 
 export default function HomePage() {
   const [isForm, setIsForm] = useState(false);
+  const [isFilter, setIsFilter] = useState(false);
+  const [isSort, setIsSort] = useState(false);
 
   const {
     isTrash,
@@ -27,7 +31,7 @@ export default function HomePage() {
     <Layout>
       <Section className="py-6">
         <div className="bg-white dark:bg-slate-800 rounded-xl shadow-md border border-slate-200 dark:border-slate-700 p-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
             <Chip
               label="Total Tasks"
               value={totalTasks}
@@ -50,30 +54,43 @@ export default function HomePage() {
             />
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-4">
-            <div className="flex-1 relative">
+          <div className="flex flex-col lg:flex-row">
+            <div className="flex-1 relative max-lg:mb-4">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
               <input
                 type="text"
                 className="w-full pl-12 pr-2 py-2 border-2 border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 rounded-lg focus:outline-none hover:border-slate-300 dark:hover:border-slate-500 max-h-10"
-                placeholder="Search by title or description..."
+                placeholder="Search by title or description . . ."
                 value={searchText}
                 onChange={(event) => setSearchText(event.target.value)}
               />
             </div>
 
-            <div className="flex justify-end gap-3">
-              <Button className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10 focus-visible:outline-none">
+            <div className="flex lg:justify-end lg:gap-4">
+              <div className="relative flex">
+                <FilterDialog
+                  isOpen={isFilter}
+                  onClose={() => setIsFilter(false)}
+                />
+                <SortDialog isOpen={isSort} onClose={() => setIsSort(false)} />
+              </div>
+              <Button
+                onClick={() => setIsFilter(true)}
+                className="flex items-center gap-2 max-lg:mr-4 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10 focus-visible:outline-none"
+              >
                 <Filter className="size-5" />
                 <span className="hidden sm:inline">Filters</span>
               </Button>
-              <Button className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10 focus-visible:outline-none">
+              <Button
+                onClick={() => setIsSort(true)}
+                className="flex items-center gap-2 max-lg:mr-4 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10 focus-visible:outline-none"
+              >
                 <ListFilter className="size-5" />
                 <span className="hidden sm:inline">Sort</span>
               </Button>
               <Button
                 onClick={toggleIsTrash}
-                className="flex items-center gap-2 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10 focus-visible:outline-none"
+                className="flex items-center gap-2 max-lg:mr-4 px-5 py-3 dark:border-gray-600 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 font-medium text-sm rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 max-h-10 focus-visible:outline-none"
               >
                 {isTrash ? (
                   <List className="size-5" />
@@ -96,10 +113,10 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section className="pt-6 pb-36 overflow-y-auto">
+      <Section className="lg:pt-6 pb-36 overflow-y-auto">
         <TaskRoot />
       </Section>
-      <TaskForm
+      <TaskDialog
         isOpen={isForm}
         onClose={() => setIsForm(false)}
         onSubmit={createTask}

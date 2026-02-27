@@ -2,13 +2,17 @@ import { X } from "lucide-react";
 import { useState } from "react";
 import Button from "../Button";
 
-interface TaskFormProps {
+interface TaskDialogProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: (title: string, description: string) => void;
 }
 
-export default function TaskForm({ isOpen, onClose, onSubmit }: TaskFormProps) {
+export default function TaskDialog({
+  isOpen,
+  onClose,
+  onSubmit,
+}: TaskDialogProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 

@@ -49,7 +49,7 @@ export default function TaskActions({
             <>
               <Button
                 className="rounded-full! dark:border-none dark:hover:bg-white focus-visible:outline-none"
-                onClick={onDeleteTask}
+                onClick={() => onDeleteTask()}
               >
                 <Trash2 className="size-4 text-red-500" />
               </Button>
