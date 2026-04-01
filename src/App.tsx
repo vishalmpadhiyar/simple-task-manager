@@ -3,7 +3,7 @@ import { ROUTE } from "./lib/const";
 import useRoute from "./hooks/useRoute";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
-import GuidePage from "./pages/GuidePage";
+// import GuidePage from "./pages/GuidePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import LoadingPage from "./pages/LoadingPage";
 import { TaskProvider } from "./provider/TaskProvider";
