@@ -27,7 +27,7 @@ export default function App() {
         </TaskProvider>
       )}
       {route === ROUTE.ABOUT && <AboutPage />}
-      {route === ROUTE.GUIDE && <GuidePage />}
+      {/* {route === ROUTE.GUIDE && <GuidePage />} */}
       {route && !pageFound && <NotFoundPage />}
     </ThemeProvider>
   );

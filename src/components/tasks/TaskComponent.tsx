@@ -106,7 +106,7 @@ export default function TaskComponent({ task }: TaskComponentProps) {
   }, []);
 
   return (
-    <div className="hide-scrollable p-4 min-h-100 max-h-100 overflow-y-auto max-w-md bg-white dark:bg-slate-800 text-black dark:text-white border border-gray-200 rounded-lg shadow-md">
+    <div className="hide-scrollable p-4 min-h-100 min-w-full max-h-100 overflow-y-auto max-w-md bg-white dark:bg-slate-800 text-black dark:text-white border border-gray-200 rounded-lg shadow-md">
       {/* action buttons - edit, trash, restore, save, delete */}
       <TaskActions
         isEdit={isEdit}

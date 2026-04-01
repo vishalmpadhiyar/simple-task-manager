@@ -10,10 +10,10 @@ const navLinks = [
     label: "About",
     route: ROUTE.ABOUT,
   },
-  {
-    label: "guide",
-    route: ROUTE.GUIDE,
-  },
+  // {
+  //   label: "guide",
+  //   route: ROUTE.GUIDE,
+  // },
 ];
 
 export default function Navbar() {

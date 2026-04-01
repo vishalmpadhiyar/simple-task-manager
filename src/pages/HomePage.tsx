@@ -113,7 +113,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section className="lg:pt-6 pb-36 overflow-y-auto">
+      <Section className="lg:py-6 overflow-y-auto">
         <TaskRoot />
       </Section>
       <TaskDialog

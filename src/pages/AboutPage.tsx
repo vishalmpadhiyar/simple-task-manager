@@ -41,33 +41,37 @@ export default function AboutPage() {
   return (
     <Layout className="bg-gray-200 py-10">
       <Section>
-        <div className="max-w-3xl mx-auto bg-white border border-gray-300 rounded-lg p-8 space-y-4">
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-md border border-slate-200 dark:border-slate-700 max-w-3xl mx-auto p-8 space-y-4">
           <div className="space-y-4">
-            <h1 className="text-3xl font-semibold text-slate-800">{title}</h1>
-            <p className="text-slate-600">{description}</p>
+            <h1 className="text-3xl font-semibold text-slate-800 dark:text-white">
+              {title}
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400">{description}</p>
           </div>
 
           <div className="space-y-2">
-            <h2 className="text-xl font-medium text-slate-800">
+            <h2 className="text-xl font-medium text-slate-800 dark:text-white">
               {features.title}
             </h2>
             <ul className="space-y-3">
               {features.list.map(({ label, text }, index) => (
                 <li key={index}>
-                  <p className="font-medium">
+                  <p className="font-medium dark:text-white">
                     {index + 1}. {label}
                   </p>
-                  <p className="text-sm">{text}</p>
+                  <p className="text-slate-600 text-sm dark:text-slate-400">
+                    {text}
+                  </p>
                 </li>
               ))}
             </ul>
           </div>
 
           <div className="space-y-2">
-            <h2 className="text-xl font-medium text-slate-800">
+            <h2 className="text-xl font-medium text-slate-800 dark:text-white">
               Built for Simplicity
             </h2>
-            <p className="text-slate-600">
+            <p className="text-slate-600 dark:text-slate-400">
               No unnecessary clutter. No steep learning curve. Simple Task
               Manager is built with a focus on clean design and smooth
               experience — so you spend less time managing your app and more
